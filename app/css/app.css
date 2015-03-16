@@ -1,6 +1,9 @@
+/*moves body down to clear nav bar*/
 body {
-  padding-top: 50px;
+  padding-top: 80px;
 }
+
+/*landing page header*/
 .starter-template {
   padding: 40px 15px;
   text-align: center;
