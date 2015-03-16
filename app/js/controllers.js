@@ -8,19 +8,29 @@ angular.module('myApp.controllers', [])
 }])
 .controller('WaitlistController', ['$scope', '$firebase', function($scope, $firebase){
     
-    var patientsRef = new Firebase('https://patient-pager.firebaseio.com/');
+    // connecting $scope.patients to live firebase data
+    var patientsRef = new Firebase('https://patient-pager.firebaseio.com/patients');
 
     // no longer needed since firebase is being used
     // $scope.patients = [];
     $scope.patients = $firebase(patientsRef);
 
+    // object to store data from waitlist form
     $scope.newPatient = {name: '', phone: '', room: ''};
 
+    // function to save a new patient to the waitlist
     $scope.savePatient = function() {
 
         // no longer needed since firebase is being used
         // $scope.patients.push($scope.patient);
         $scope.patients.$add($scope.newPatient);
         $scope.newPatient = {name: '', phone: '', room: ''};
+    };
+
+    // function for sending text message
+    $scope.sendTextMessage = function(phoneNumber){
+        var textMessageRef = new Firebase('https://patient-pager.firebaseio.com/textMessages');
+        var textMessages = $firebase(textMessageRef);
+        textMessages.$add({phoneNumber: phoneNumber});
     };
 }]);

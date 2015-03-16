@@ -33,7 +33,7 @@
       </td>
       <td>add this later - notified?</td>
       <td>
-        <button type="submit" class="btn btn-success">Send SMS</button>
+        <button ng-click="sendTextMessage(patient.phone)" type="submit" class="btn btn-success">Send SMS</button>
         <button ng-click="patients.$remove(patient.$id)" type="submit" class="btn btn-danger">Remove</button>
       </td>
     </tr>
