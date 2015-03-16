@@ -31,7 +31,9 @@
         <div>Phone: {{ patient.phone }} </div>
         <div>Room: {{ patient.room }}</div>
       </td>
-      <td>add this later - notified?</td>
+      <td>
+        <div> {{ patient.notified }} </div>
+      </td>
       <td>
         <button ng-click="sendTextMessage(patient)" type="submit" class="btn btn-success">Send SMS</button>
         <button ng-click="patients.$remove(patient.$id)" type="submit" class="btn btn-danger">Remove</button>
