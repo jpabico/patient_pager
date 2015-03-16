@@ -1,15 +1,15 @@
 <form ng-submit='savePatient()' class="form-inline patient-form">
   <div class="form-group">
     <label class="sr-only" for="patientName">Patient name</label>
-    <input ng-model='patient.name'   type="text" class="form-control" id="patientName" placeholder="Name">
+    <input ng-model='newPatient.name'   type="text" class="form-control" id="patientName" placeholder="Name">
   </div>
   <div class="form-group">
     <label class="sr-only" for="phoneNumber">Phone number</label>
-    <input ng-model='patient.phone' type="text" class="form-control" id="phoneNumber" placeholder="Phone">
+    <input ng-model='newPatient.phone' type="text" class="form-control" id="phoneNumber" placeholder="Phone">
   </div>
   <div class="form-group">
     <label class="sr-only" for="roomNumber">Room number</label>
-    <input ng-model='patient.room' type="text" class="form-control" id="roomNumber" placeholder="Room">
+    <input ng-model='newPatient.room' type="text" class="form-control" id="roomNumber" placeholder="Room">
   </div>
  
   <button type="submit" class="btn btn-primary">Add patient</button>
@@ -24,7 +24,7 @@
         <th>Actions</th>
       </tr>
   </thead>
-    <tr ng-repeat="patient in patients">
+    <tr ng-repeat="patient in patients | orderByPriority">
       <td><input type="checkbox"></td>
       <td>
         <div><strong>{{patient.name}}</strong></div>
@@ -34,7 +34,7 @@
       <td>add this later - notified?</td>
       <td>
         <button type="submit" class="btn btn-success">Send SMS</button>
-        <button type="submit" class="btn btn-danger">Remove</button>
+        <button ng-click="patients.$remove(patient.$id)" type="submit" class="btn btn-danger">Remove</button>
       </td>
     </tr>
 </table>

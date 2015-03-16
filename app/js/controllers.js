@@ -14,13 +14,13 @@ angular.module('myApp.controllers', [])
     // $scope.patients = [];
     $scope.patients = $firebase(patientsRef);
 
-    $scope.patient = {name: '', phone: '', room: ''};
+    $scope.newPatient = {name: '', phone: '', room: ''};
 
     $scope.savePatient = function() {
 
         // no longer needed since firebase is being used
         // $scope.patients.push($scope.patient);
-        $scope.patients.$add($scope.patient);
-        $scope.patient = {name: '', phone: '', room: ''};
+        $scope.patients.$add($scope.newPatient);
+        $scope.newPatient = {name: '', phone: '', room: ''};
     };
 }]);
