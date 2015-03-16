@@ -25,7 +25,7 @@
       </tr>
   </thead>
     <tr ng-repeat="patient in patients | orderByPriority">
-      <td><input type="checkbox"></td>
+      <td><input type="checkbox" ng-model="patient.done" ng-change="patients.$save(patient.$id)"></td>
       <td>
         <div><strong>{{patient.name}}</strong></div>
         <div>Phone: {{ patient.phone }} </div>
@@ -33,7 +33,7 @@
       </td>
       <td>add this later - notified?</td>
       <td>
-        <button ng-click="sendTextMessage(patient.phone)" type="submit" class="btn btn-success">Send SMS</button>
+        <button ng-click="sendTextMessage(patient)" type="submit" class="btn btn-success">Send SMS</button>
         <button ng-click="patients.$remove(patient.$id)" type="submit" class="btn btn-danger">Remove</button>
       </td>
     </tr>

@@ -16,7 +16,7 @@ angular.module('myApp.controllers', [])
     $scope.patients = $firebase(patientsRef);
 
     // object to store data from waitlist form
-    $scope.newPatient = {name: '', phone: '', room: ''};
+    $scope.newPatient = {name: '', phone: '', room: '', done: false};
 
     // function to save a new patient to the waitlist
     $scope.savePatient = function() {
@@ -24,13 +24,18 @@ angular.module('myApp.controllers', [])
         // no longer needed since firebase is being used
         // $scope.patients.push($scope.patient);
         $scope.patients.$add($scope.newPatient);
-        $scope.newPatient = {name: '', phone: '', room: ''};
+        $scope.newPatient = {name: '', phone: '', room: '', done: false};
     };
 
     // function for sending text message
-    $scope.sendTextMessage = function(phoneNumber){
+    $scope.sendTextMessage = function(patient){
         var textMessageRef = new Firebase('https://patient-pager.firebaseio.com/textMessages');
         var textMessages = $firebase(textMessageRef);
-        textMessages.$add({phoneNumber: phoneNumber});
+        var newTextMessage = {
+            phoneNumber: patient.phone,
+            room: patient.room,
+            name: patient.name
+        };
+        textMessages.$add(newTextMessage);
     };
 }]);
