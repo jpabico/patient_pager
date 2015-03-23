@@ -6,10 +6,10 @@ angular.module('myApp.controllers', [])
 .controller('LandingPageController', [function(){
 
 }])
-.controller('WaitlistController', ['$scope', '$firebase', function($scope, $firebase){
+.controller('WaitlistController', ['$scope', '$firebase', 'FIREBASE_URL', function($scope, $firebase, FIREBASE_URL){
     
     // connecting $scope.patients to live firebase data
-    var patientsRef = new Firebase('https://patient-pager.firebaseio.com/patients');
+    var patientsRef = new Firebase(FIREBASE_URL + 'patients');
 
     // no longer needed since firebase is being used
     // $scope.patients = [];
@@ -29,7 +29,7 @@ angular.module('myApp.controllers', [])
 
     // function for sending text message
     $scope.sendTextMessage = function(patient){
-        var textMessageRef = new Firebase('https://patient-pager.firebaseio.com/textMessages');
+        var textMessageRef = new Firebase(FIREBASE_URL + 'textMessages');
         var textMessages = $firebase(textMessageRef);
         var newTextMessage = {
             phoneNumber: patient.phone,
@@ -41,8 +41,8 @@ angular.module('myApp.controllers', [])
         $scope.patients.$save(patient.$id)
     };
 }])
-.controller('AuthController', ['$scope', '$firebaseSimpleLogin', '$location', function($scope, $firebaseSimpleLogin, $location) {
-        var authRef = new Firebase('https://patient-pager.firebaseio.com/');
+.controller('AuthController', ['$scope', '$firebaseSimpleLogin', '$location', 'FIREBASE_URL', function($scope, $firebaseSimpleLogin, $location, FIREBASE_URL) {
+        var authRef = new Firebase(FIREBASE_URL);
         var auth = $firebaseSimpleLogin(authRef);
 
         $scope.user = {email: '', password: ''};
