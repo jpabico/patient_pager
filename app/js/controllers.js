@@ -41,27 +41,24 @@ angular.module('myApp.controllers', [])
         $scope.patients.$save(patient.$id)
     };
 }])
-.controller('AuthController', ['$scope', '$firebaseSimpleLogin', '$location', 'FIREBASE_URL', 'authService', function($scope, $firebaseSimpleLogin, $location, FIREBASE_URL, authService) {
-        var authRef = new Firebase(FIREBASE_URL);
-        var auth = $firebaseSimpleLogin(authRef);
+.controller('AuthController', ['$scope', 'authService', function($scope, authService) {
 
+        // object bound to inputs on register and login pages
         $scope.user = {email: '', password: ''};
 
+        // method to register using the authService
         $scope.register = function() {
-            // returns an Angular promise
-            auth.$createUser($scope.user.email, $scope.user.password).then(function(data){
-                console.log(data);
-                $scope.login();
-            });
+                authService.register($scope.user);
         };
 
+        // method to login using the authService
         $scope.login = function() {
                 authService.login($scope.user);
         };
 
+        // method to logout using the authService
         $scope.logout = function() {
-            auth.$logout();
-            // redirect users to / landing page
-            $location.path('/');
-;        };
+                authService.logout();
+        };
+        
 }]);
