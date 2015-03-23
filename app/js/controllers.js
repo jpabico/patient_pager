@@ -46,6 +46,7 @@ angular.module('myApp.controllers', [])
         var auth = $firebaseSimpleLogin(authRef);
 
         $scope.user = {email: '', password: ''};
+
         $scope.register = function() {
             // returns an Angular promise
             auth.$createUser($scope.user.email, $scope.user.password).then(function(data){
@@ -59,4 +60,8 @@ angular.module('myApp.controllers', [])
                 console.log(data);
             });
         };
+
+        $scope.logout = function() {
+            auth.$logout()
+;        };
 }]);
