@@ -21,6 +21,29 @@ angular.module('myApp.services', [])
     return patientServiceObject;
 
   })
+  .factory('textMessageService', function($firebase, FIREBASE_URL, patientService) {
+        var textMessageRef = new Firebase(FIREBASE_URL + 'textMessages');
+        var textMessages = $firebase(textMessageRef);
+
+        var textMessageServiceObject = {
+            sendTextMessage: function(patient) {
+                var newTextMessage = {
+                    phoneNumber: patient.phone,
+                    room: patient.room,
+                    name: patient.name
+                };
+
+                textMessages.$add(newTextMessage)
+                patient.notified = 'Yes';
+                // $scope.patients.$save(patient.$id);
+                patientService.patients.$save(patient.$id)
+            }
+        };
+
+        return textMessageServiceObject
+
+        
+  })
   .factory('authService', function($firebaseSimpleLogin, $location, $rootScope, FIREBASE_URL) {
 
         var authRef = new Firebase(FIREBASE_URL);

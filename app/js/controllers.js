@@ -6,7 +6,7 @@ angular.module('myApp.controllers', [])
 .controller('LandingPageController', [function(){
 
 }])
-.controller('WaitlistController', ['$scope', 'patientService', function($scope, patientService) {
+.controller('WaitlistController', ['$scope', 'patientService', 'textMessageService', function($scope, patientService, textMessageService) {
     
     // connecting $scope.patients to live firebase data
     // var patientsRef = new Firebase(FIREBASE_URL + 'patients');
@@ -34,16 +34,7 @@ angular.module('myApp.controllers', [])
 
     // function for sending text message
     $scope.sendTextMessage = function(patient){
-        var textMessageRef = new Firebase(FIREBASE_URL + 'textMessages');
-        var textMessages = $firebase(textMessageRef);
-        var newTextMessage = {
-            phoneNumber: patient.phone,
-            room: patient.room,
-            name: patient.name
-        };
-        textMessages.$add(newTextMessage);
-        patient.notified = 'Yes';
-        $scope.patients.$save(patient.$id)
+        textMessageService.sendTextMessage(patient);
     };
 }])
 .controller('AuthController', ['$scope', 'authService', function($scope, authService) {
