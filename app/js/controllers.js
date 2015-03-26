@@ -6,14 +6,17 @@ angular.module('myApp.controllers', [])
 .controller('LandingPageController', [function(){
 
 }])
-.controller('WaitlistController', ['$scope', '$firebase', 'FIREBASE_URL', function($scope, $firebase, FIREBASE_URL){
+.controller('WaitlistController', ['$scope', 'patientService', function($scope, patientService) {
     
     // connecting $scope.patients to live firebase data
-    var patientsRef = new Firebase(FIREBASE_URL + 'patients');
+    // var patientsRef = new Firebase(FIREBASE_URL + 'patients');
 
     // no longer needed since firebase is being used
     // $scope.patients = [];
-    $scope.patients = $firebase(patientsRef);
+    // $scope.patients = $firebase(patientsRef);
+
+    // Binds Firebase patients to $scope using service
+    $scope.patients = patientService.patients;
 
     // object to store data from waitlist form
     $scope.newPatient = {name: '', phone: '', room: '', done: false, notified: 'No'};
@@ -23,8 +26,10 @@ angular.module('myApp.controllers', [])
 
         // no longer needed since firebase is being used
         // $scope.patients.push($scope.patient);
-        $scope.patients.$add($scope.newPatient);
-        $scope.newPatient = {name: '', phone: '', room: '', done: false, notified: 'No'};
+        // $scope.patients.$add($scope.newPatient);
+        // $scope.newPatient = {name: '', phone: '', room: '', done: false, notified: 'No'};
+
+        patientService.savePatient($scope.newPatient);
     };
 
     // function for sending text message
@@ -60,5 +65,5 @@ angular.module('myApp.controllers', [])
         $scope.logout = function() {
                 authService.logout();
         };
-        
+
 }]);

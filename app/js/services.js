@@ -7,6 +7,20 @@
 // In this case it is a simple value service.
 angular.module('myApp.services', [])
   .value('FIREBASE_URL', 'https://patient-pager.firebaseio.com/')
+  .factory('patientService', function($firebase, FIREBASE_URL) {
+    var patientsRef = new Firebase(FIREBASE_URL + 'patients');
+    var patients = $firebase(patientsRef);
+
+    var patientServiceObject = {
+        patients: patients,
+        savePatient: function(patient) {
+            patients.$add(patient);
+        }
+    };
+
+    return patientServiceObject;
+
+  })
   .factory('authService', function($firebaseSimpleLogin, $location, $rootScope, FIREBASE_URL) {
 
         var authRef = new Firebase(FIREBASE_URL);
