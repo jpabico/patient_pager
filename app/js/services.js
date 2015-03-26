@@ -7,9 +7,18 @@
 // In this case it is a simple value service.
 angular.module('myApp.services', [])
   .value('FIREBASE_URL', 'https://patient-pager.firebaseio.com/')
-  .factory('patientService', function($firebase, FIREBASE_URL) {
-    var patientsRef = new Firebase(FIREBASE_URL + 'patients');
-    var patients = $firebase(patientsRef);
+  .factory('dataService', function($firebase, FIREBASE_URL) {
+    var dataRef = new Firebase(FIREBASE_URL);
+    var fireData = $firebase(dataRef);
+
+    return fireData;
+
+  })
+  .factory('patientService', function(dataService) {
+    // var patientsRef = new Firebase(FIREBASE_URL + 'patients');
+    // var patients = $firebase(patientsRef);
+
+    var patients = dataService.$child('patients');
 
     var patientServiceObject = {
         patients: patients,
@@ -21,9 +30,10 @@ angular.module('myApp.services', [])
     return patientServiceObject;
 
   })
-  .factory('textMessageService', function($firebase, FIREBASE_URL, patientService) {
-        var textMessageRef = new Firebase(FIREBASE_URL + 'textMessages');
-        var textMessages = $firebase(textMessageRef);
+  .factory('textMessageService', function(dataService, patientService) {
+        // var textMessageRef = new Firebase(FIREBASE_URL + 'textMessages');
+        // var textMessages = $firebase(textMessageRef);
+        var textMessages = dataService.$child('textMessages');
 
         var textMessageServiceObject = {
             sendTextMessage: function(patient) {
