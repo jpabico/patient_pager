@@ -29,7 +29,7 @@ angular.module('myApp.controllers', [])
         // $scope.patients.$add($scope.newPatient);
         // $scope.newPatient = {name: '', phone: '', room: '', done: false, notified: 'No'};
 
-        patientService.savePatient($scope.newPatient);
+        patientService.savePatient($scope.newPatient, $scope.currentUser.id);
     };
 
     // function for sending text message

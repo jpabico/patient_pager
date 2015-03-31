@@ -19,11 +19,13 @@ angular.module('myApp.services', [])
     // var patients = $firebase(patientsRef);
 
     var patients = dataService.$child('patients');
+    var users = dataService.$child('users');
 
     var patientServiceObject = {
         patients: patients,
-        savePatient: function(patient) {
-            patients.$add(patient);
+        savePatient: function(patient, userId) {
+            // patients.$add(patient);
+            users.$child(userId).$child('patients').$add(patient);
         }
     };
 
