@@ -6,8 +6,15 @@ angular.module('myApp.controllers', [])
 .controller('LandingPageController', [function(){
 
 }])
-.controller('WaitlistController', ['$scope', 'patientService', 'textMessageService', function($scope, patientService, textMessageService) {
+.controller('WaitlistController', ['$scope', 'patientService', 'textMessageService', 'authService', function($scope, patientService, textMessageService, authService) {
     
+    // bind user's patients to $scope.patients
+    authService.getCurrentUser().then(function(user) {
+        if(user) {
+            $scope.patients = patientService.getPatientsByUserId(user.id);
+        }
+    })
+
     // connecting $scope.patients to live firebase data
     // var patientsRef = new Firebase(FIREBASE_URL + 'patients');
 
@@ -16,7 +23,7 @@ angular.module('myApp.controllers', [])
     // $scope.patients = $firebase(patientsRef);
 
     // Binds Firebase patients to $scope using service
-    $scope.patients = patientService.patients;
+    // $scope.patients = patientService.patients;
 
     // object to store data from waitlist form
     $scope.newPatient = {name: '', phone: '', room: '', done: false, notified: 'No'};

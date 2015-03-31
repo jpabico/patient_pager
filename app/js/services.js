@@ -18,14 +18,17 @@ angular.module('myApp.services', [])
     // var patientsRef = new Firebase(FIREBASE_URL + 'patients');
     // var patients = $firebase(patientsRef);
 
-    var patients = dataService.$child('patients');
+    // var patients = dataService.$child('patients');
     var users = dataService.$child('users');
 
     var patientServiceObject = {
-        patients: patients,
+        // patients: patients,
         savePatient: function(patient, userId) {
             // patients.$add(patient);
             users.$child(userId).$child('patients').$add(patient);
+        },
+        getPatientsByUserId: function(userId) {
+            return users.$child(userId).$child('patients');
         }
     };
 
@@ -80,6 +83,9 @@ angular.module('myApp.services', [])
                 auth.$logout();
                 // redirect users to / landing page
                 $location.path('/');
+            },
+            getCurrentUser: function() {
+                return auth.$getCurrentUser();
             }
         };
 
