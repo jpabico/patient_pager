@@ -71,14 +71,16 @@ angular.module('myApp.services', [])
             register: function(user) {
                 // returns an Angular promise
                 auth.$createUser(user.email, user.password).then(function(data){
-                console.log(data);
-                emails.$add({email: user.email});
-                authServiceObject.login(user);
-            });
+                    console.log(data);
+                    authServiceObject.login(user, function() {
+                        emails.$add({email: user.email});
+                    });
+                });
             },
-            login: function(user) {
+            login: function(user, optionalCallback) {
                 auth.$login('password', user).then(function(data) {
                 console.log(data);
+                optionalCallback();
                 // redirect users to /waitlist page
                 $location.path('/waitlist');
             });
