@@ -41,7 +41,7 @@ angular.module('myApp.services', [])
         var textMessages = dataService.$child('textMessages');
 
         var textMessageServiceObject = {
-            sendTextMessage: function(patient) {
+            sendTextMessage: function(patient, userId) {
                 var newTextMessage = {
                     phoneNumber: patient.phone,
                     room: patient.room,
@@ -49,9 +49,11 @@ angular.module('myApp.services', [])
                 };
 
                 textMessages.$add(newTextMessage)
-                patient.notified = 'Yes';
+                // patient.notified = 'Yes';
                 // $scope.patients.$save(patient.$id);
-                patientService.patients.$save(patient.$id)
+                // patientService.patients.$save(patient.$id)
+
+                patientService.getPatientsByUserId(userId).$child(patient.$id).$update({notified: 'Yes'});
             }
         };
 

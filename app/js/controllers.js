@@ -41,7 +41,7 @@ angular.module('myApp.controllers', [])
 
     // function for sending text message
     $scope.sendTextMessage = function(patient){
-        textMessageService.sendTextMessage(patient);
+        textMessageService.sendTextMessage(patient, $scope.currentUser.id);
     };
 }])
 .controller('AuthController', ['$scope', 'authService', function($scope, authService) {
